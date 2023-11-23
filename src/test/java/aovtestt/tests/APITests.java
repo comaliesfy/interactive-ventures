@@ -47,7 +47,12 @@ public class APITests {
         assertTrue(response.getContentType().startsWith("application/json"));
         assertTrue(response.body().jsonPath().get("isSuccess") instanceof Boolean);
         assertTrue(response.body().jsonPath().get("errorCode") instanceof Integer);
-        assertTrue(response.body().jsonPath().get("user") instanceof java.util.Map);
+        assertTrue(response.body().jsonPath().get("user.id") instanceof Integer);
+        assertTrue(response.body().jsonPath().get("user.name") instanceof String);
+        assertTrue(response.body().jsonPath().get("user.gender") instanceof String);
+        assertTrue(response.body().jsonPath().get("user.age") instanceof Integer);
+        assertTrue(response.body().jsonPath().get("user.city") instanceof String);
+        assertTrue(response.body().jsonPath().get("user.registrationDate") instanceof String);
     }
 
     @Test
@@ -62,8 +67,6 @@ public class APITests {
         for (Integer userId : idList) {
             Response userByIdApiResponse = Requests.getUserByID(userId.toString());
 
-
-            // Assertions for each user response
             assertEquals(200, userByIdApiResponse.getStatusCode());
             assertEquals(userId, userByIdApiResponse.getBody().jsonPath().get("user.id"));
         }
@@ -82,8 +85,6 @@ public class APITests {
         for (Integer userId : idList) {
             Response userByIdApiResponse = Requests.getUserByID(userId.toString());
 
-
-            // Assertions for each user response
             assertEquals(200, userByIdApiResponse.getStatusCode());
             assertEquals(userId, userByIdApiResponse.getBody().jsonPath().get("user.id"));
         }
